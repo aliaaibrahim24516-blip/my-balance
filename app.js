@@ -1,5 +1,5 @@
-import { weightView, bindWeight } from './weight.js';
-import { validateState, dateAfter, slots, slotNames, localDate, newPlan, defaults, shopping, cost, swapMeal, cookMeal, buyMissing } from './core.js';
+import { weightView, bindWeight } from './weight.js?v=2.1';
+import { validateState, dateAfter, slots, slotNames, localDate, newPlan, defaults, shopping, cost, swapMeal, cookMeal, buyMissing } from './core.js?v=2.1';
 const $ = s => document.querySelector(s),
   view = $('#view'),
   KEY = 'my-balance-v1';
@@ -252,7 +252,7 @@ bindWeight(view, {
 });
 async function init() {
   try {
-    const response = await fetch('./data/recipes.json');
+    const response = await fetch('./data/recipes.json?v=2.1');
     if (!response.ok) throw Error();
     catalog = await response.json();
     const raw = localStorage.getItem(KEY);

@@ -1,4 +1,4 @@
-import { monthBoundary, goal, localDate, validDate, validateState } from './core.js';
+import { monthBoundary, goal, localDate, validDate, validateState } from './core.js?v=2.1';
 const number = n => n.toLocaleString('ar-KW', {
   maximumFractionDigits: 2
 });
