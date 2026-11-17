@@ -81,7 +81,7 @@ function todayView() {
     month: 'long'
   }) : 'انتهى الأسبوع؟ ابدئي خطة جديدة من قسم الأسبوع.'}</p>
 <p class="small">${next ? catalog.recipes.find(r => r.id === next.recipeId).portion : ''}</p>
-<button data-go="week" class="secondary">شوفي خطة الأسبوع ←</button>
+<button data-go="week" class="secondary">${localDate() > state.plan[27].date ? "ابدئي أسبوعًا جديدًا" : "شوفي خطة الأسبوع ←"}</button>
 </div>
 <div>${plate()}</div>
 </div>
@@ -100,7 +100,7 @@ function todayView() {
 }
 function weekView() {
   return title('٧ أيام / ٤ وجبات يوميًا', 'أسبوع فيه مساحة للتغيير', 'كل وصفة تكفي أربعة. التبديل داخل نفس نوع الوجبة، دون تغيير بقية الأسبوع.') + `<div class="card actions">
-<label>بداية الأسبوع <input id="week-start" type="date" value="${state.startDate}">
+<label>بداية الأسبوع <input id="week-start" type="date" value="${localDate() > state.plan[27].date ? localDate() : state.startDate}">
 </label>
 <button id="new-week" class="secondary">بدء خطة أسبوع جديدة</button>
 <span class="small">بدء خطة جديدة لا يغيّر المخزون.</span>
@@ -257,7 +257,7 @@ async function init() {
     catalog = await response.json();
     const raw = localStorage.getItem(KEY);
     state = raw ? validateState(JSON.parse(raw), catalog) : defaults(catalog.recipes);
-    if (!raw) localStorage.setItem(KEY, JSON.stringify(state));
+    if (!raw || JSON.parse(raw).version === 1) localStorage.setItem(KEY, JSON.stringify(state));
     ready = true;
     render();
   } catch {
